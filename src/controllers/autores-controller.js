@@ -7,7 +7,7 @@ class AutorController {
     autores.find((err, autores) => {
       res.status(200).json(autores);
     });
-  }
+  };
 
   // GET por id
   static listarAutorPorId = (req, res) => {
@@ -15,12 +15,12 @@ class AutorController {
 
     autores.findById(id, (err, livro) => {
       if (err) {
-        res.status(400).send({message: `${err.message} - o id '${id}' não existe.`})
+        res.status(400).send({message: `${err.message} - o id '${id}' não existe.`});
       } else {
-        res.status(200).send(livro)
+        res.status(200).send(livro);
       }
-    })
-  }
+    });
+  };
 
   // POST
   static cadastrarAutor = (req, res) => {
@@ -41,13 +41,13 @@ class AutorController {
 
     autores.findByIdAndUpdate(id, {$set: req.body}, err => {
       if (!err) {
-        console.log(req.body)
+        console.log(req.body);
         res.status(200).send(`Autor '${req.body.nome}' atualizado com sucesso!`);
       } else {
         res.status(500).send({message: err.message});
       }
     });
-  }
+  };
 
   // DELETE
   static excluirAutor = (req, res) => {
@@ -55,12 +55,12 @@ class AutorController {
 
     autores.findByIdAndDelete(id, (err) => {
       if (!err) {
-        res.status(200).send({message: 'Autor removido com sucesso!'});
+        res.status(200).send({message: "Autor removido com sucesso!"});
       } else {
         res.status(500).send({message: err.message});
       }
-    })
-  }
+    });
+  };
   
 
 }

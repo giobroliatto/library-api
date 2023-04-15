@@ -1,2 +1,9 @@
 -> adicionada biblioteca dotenv, que permite gerenciar variáveis de ambiente, podendo ocultá-las do código, que é o que foi feito com acesso ao banco pelo db-connect, onde criou-se o .env, adicionou-se ali a variável com a string de acesso ao e importou-se o dotenv no server.js
 
+-> adicionada biblioteca eslint, que é usado pra padrões de projeto, estilos, identações, etc.
+- comando pra ajustar todo código com as configs selecionadas na inicialização do eslint (npm init @esling/config):
+npx eslint ./src --fix
+- pra esses ajustes serem feitos toda vez que um arquivo é salvo: ctrl+shift+p -> settings -> incluir no final a seguinte linha:
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint": true
+}

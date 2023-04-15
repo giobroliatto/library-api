@@ -3,10 +3,10 @@ import db from "./config/db-connect.js";
 import routes from "./routes/index.js";
 
 // inicializando o db
-db.on("error", console.log.bind(console, 'Erro de conexão'));
+db.on("error", console.log.bind(console, "Erro de conexão"));
 db.once("open", () => {
-  console.log('Conexão com o banco realizada com sucesso');
-})
+  console.log("Conexão com o banco realizada com sucesso");
+});
 
 // criando uma instância do framework express, que fará as requisições http de forma simplificada
 const app = express();
