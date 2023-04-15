@@ -1,0 +1,2 @@
+-> adicionada biblioteca dotenv, que permite gerenciar variáveis de ambiente, podendo ocultá-las do código, que é o que foi feito com acesso ao banco pelo db-connect, onde criou-se o .env, adicionou-se ali a variável com a string de acesso ao e importou-se o dotenv no server.js
+
