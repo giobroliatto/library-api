@@ -5,18 +5,18 @@ import livros from "../models/Livro.js";
 class LivroController {
 
   // GET todos livros
-  static listarLivros = async (req, res) => {
+  static listarLivros = async (req, res, next) => {
     try {
       const livrosResultado = await livros.find().populate("autor").exec();
 
       res.status(200).json(livrosResultado);
     } catch (erro) {
-      res.status(500).json(erro.message);
+      next(erro);
     }
   };
 
   // GET por id
-  static listarLivroPorId = async (req, res) => {
+  static listarLivroPorId = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -26,12 +26,12 @@ class LivroController {
 
       res.status(200).send(livroResultados);
     } catch (erro) {
-      res.status(400).send({message: `${erro.message} - Id do livro não localizado.`});
+      next(erro);
     }
   };
 
   // GET por editora
-  static listarLivroPorEditora = async (req, res) => {
+  static listarLivroPorEditora = async (req, res, next) => {
     try {
       const editora = req.query.editora;
 
@@ -39,12 +39,12 @@ class LivroController {
 
       res.status(200).send(livrosResultado);
     } catch (erro) {
-      res.status(500).json({ message: "Erro interno no servidor" });
+      next(erro);
     }
   };
 
   // POST
-  static cadastrarLivro = async (req, res) => {
+  static cadastrarLivro = async (req, res, next) => {
     try {
       let livro = new livros(req.body);
 
@@ -52,12 +52,12 @@ class LivroController {
 
       res.status(201).send(livroResultado.toJSON());
     } catch (erro) {
-      res.status(500).send({message: `${erro.message} - falha ao cadastrar livro.`});
+      next(erro);
     }
   };
 
   // PUT
-  static atualizarLivro = async (req, res) => {
+  static atualizarLivro = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -65,12 +65,12 @@ class LivroController {
 
       res.status(200).send({message: "livro atualizado com sucesso"});
     } catch (erro) {
-      res.status(500).send({message: erro.message});
+      next(erro);
     }
   };
 
   // DELETE
-  static excluirLivro = async (req, res) => {
+  static excluirLivro = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -78,7 +78,7 @@ class LivroController {
 
       res.status(200).send({message: "Livro removido com sucesso"});
     } catch (erro) {
-      res.status(500).send({message: erro.message});
+      next(erro);
     }
   };
   
