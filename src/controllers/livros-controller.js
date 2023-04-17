@@ -20,11 +20,15 @@ class LivroController {
     try {
       const id = req.params.id;
 
-      const livroResultados = await livros.findById(id)
+      const livroResultado = await livros.findById(id)
         .populate("autor", "nome")
         .exec();
 
-      res.status(200).send(livroResultados);
+      if (livroResultado !== null) {
+        res.status(200).send(livroResultado);
+      } else {
+        res.status(404).send({message: "id do livro não localizado"});
+      }
     } catch (erro) {
       next(erro);
     }
