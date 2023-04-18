@@ -50,7 +50,12 @@ class AutorController {
 
       const autorParaAlterar = await autores.findByIdAndUpdate(id, {$set: req.body});
 
-      res.status(200).send(`autor '${autorParaAlterar.nome}' atualizado com sucesso para '${req.body.nome}'`);
+      if (autorParaAlterar !== null) {
+        res.status(200).send({message: `autor '${autorParaAlterar.nome}' atualizado com sucesso para '${req.body.nome}'`});
+      } else {
+        res.status(404).send({message: "id do autor não localizado"});
+      }
+
 
     } catch (erro) {
       next(erro);
@@ -64,7 +69,12 @@ class AutorController {
 
       const autorExcluido = await autores.findByIdAndDelete(id);
 
-      res.status(200).send({message: `autor '${autorExcluido.nome}' removido com sucesso!`});
+      if (autorExcluido !== null) {
+        res.status(200).send({message: `autor '${autorExcluido.nome}' removido com sucesso!`});
+      } else {
+        res.status(404).send({message: "id do autor não localizado"});
+      }
+
     } catch (erro) {
       next(erro);
     }

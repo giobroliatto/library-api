@@ -65,9 +65,14 @@ class LivroController {
     try {
       const id = req.params.id;
 
-      await livros.findByIdAndUpdate(id, {$set: req.body});
+      const livroParaAtualizar = await livros.findByIdAndUpdate(id, {$set: req.body});
 
-      res.status(200).send({message: "livro atualizado com sucesso"});
+      if (livroParaAtualizar != null) {
+        res.status(200).send({message: "livro atualizado com sucesso!"});
+      } else {
+        res.status(404).send({message: "id do livro não localizado"});
+      }
+
     } catch (erro) {
       next(erro);
     }
@@ -78,9 +83,14 @@ class LivroController {
     try {
       const id = req.params.id;
 
-      await livros.findByIdAndDelete(id);
+      const livroParaDeletar = await livros.findByIdAndDelete(id);
 
-      res.status(200).send({message: "Livro removido com sucesso"});
+      if (livroParaDeletar !== null) {
+        res.status(200).send({message: "Livro removido com sucesso"});
+      } else {
+        res.status(404).send({message: "id do livro não localizado"});
+      }
+
     } catch (erro) {
       next(erro);
     }
