@@ -1,6 +1,6 @@
 /* aqui será feita a implementação de cada método que será usado na API (GET, POST, PUT, DELETE) */
 
-import livros from "../models/Livro.js";
+import {autores, livros} from "../models/index.js";
 
 class LivroController {
 
@@ -34,12 +34,26 @@ class LivroController {
     }
   };
 
-  // GET por editora
-  static listarLivroPorEditora = async (req, res, next) => {
+  // GET por filtro
+  static listarLivroPorFiltro = async (req, res, next) => {
     try {
-      const editora = req.query.editora;
+      const { editora, titulo, minPaginas, maxPaginas, nomeAutor } = req.query;
 
-      const livrosResultado = await livros.find({"editora": editora});
+      const busca = {};
+
+      if (editora) busca.editora = editora;
+      if (titulo) busca.titulo = { $regex: titulo, $options: "i" }; // o regex pro título é pra poder buscar qualquer título que CONTENHA o texto informado, e a tag "i" é pra não diferenciar minúsculas e maiúsculas
+      if (minPaginas || maxPaginas) busca.numPag = {};
+      if (minPaginas) busca.numPag.$gte = minPaginas;
+      if (maxPaginas) busca.numPag.$lte = maxPaginas;
+      if (nomeAutor) {
+        const autor = await autores.findOne({ nome: nomeAutor });
+        busca.autor = autor._id;
+      }
+
+      const livrosResultado = await livros.find(busca).populate("autor", "nome");
+
+      // http://localhost:3000/livros/busca?editora=Geo&/titulo=Lógica de Programação
 
       res.status(200).send(livrosResultado);
     } catch (erro) {
