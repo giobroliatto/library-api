@@ -1,34 +1,15 @@
 /* aqui será feita a implementação de cada método que será usado na API (GET, POST, PUT, DELETE) */
 
 import {autores, livros} from "../models/index.js";
-import RequisicaoIncorreta from "../errors/requisicao-incorreta.js";
 
 class LivroController {
 
   // GET todos livros
   static listarLivros = async (req, res, next) => {
     try {
-      let { limite = 2, pagina = 1, ordenacao = "titulo:1" } = req.query;
-
-      let [campoOrdenacao, ordem] = ordenacao.split(":");
-
-      limite = parseInt(limite);
-      pagina = parseInt(pagina);
-      ordem = parseInt(ordem);
-
-      if (limite > 0 && pagina > 0) {
-        const livrosResultado = await livros.find()
-          .sort({ [campoOrdenacao]: ordem })
-          .skip((pagina - 1) * limite)
-          .limit(limite)
-          .populate("autor")
-          .exec();
-  
-        res.status(200).json(livrosResultado);
-      } else {
-        next(new RequisicaoIncorreta());
-      }
-
+      const buscaLivros = livros.find();
+      req.resultado = buscaLivros;
+      next();
     } catch (erro) {
       next(erro);
     }
@@ -70,11 +51,14 @@ class LivroController {
         busca.autor = autor._id;
       }
 
-      const livrosResultado = await livros.find(busca).populate("autor", "nome");
+      const livrosResultado = livros
+        .find(busca)
+        .populate("autor", "nome");
 
+      req.resultado = livrosResultado;
+
+      next();
       // http://localhost:3000/livros/busca?editora=Geo&/titulo=Lógica de Programação
-
-      res.status(200).send(livrosResultado);
     } catch (erro) {
       next(erro);
     }
