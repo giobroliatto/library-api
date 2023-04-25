@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import autopopulate from "mongoose-autopopulate";
 
 // montando o schema que será usado na coleção de livros
 const livroSchema = new mongoose.Schema(
@@ -11,7 +12,8 @@ const livroSchema = new mongoose.Schema(
     autor: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: "autores", 
-      required: [true, "o campo 'autor' é obrigatório"]
+      required: [true, "o campo 'autor' é obrigatório"],
+      autopopulate: true
     },
     editora: {
       type: String, 
@@ -25,6 +27,8 @@ const livroSchema = new mongoose.Schema(
   }
 );
 
+// usado para popular algum campo presente em livros utilizando valor de outra tabela automaticamente
+livroSchema.plugin(autopopulate);
 // criando variável que será o vínculo com a coleção do banco (se não existisse uma coleção chamada 'livros', ele criaria automático)
 const livros = mongoose.model("livros", livroSchema);
 
