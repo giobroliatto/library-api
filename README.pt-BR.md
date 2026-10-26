@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/icon.svg" width="72" alt="Logo do library-api" />
+
 # library-api
 
 **API REST de um catálogo de livros, com Express e Mongoose, tratamento centralizado de erros, filtros e paginação.**
