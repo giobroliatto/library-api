@@ -12,6 +12,8 @@
 ![Mongoose](https://img.shields.io/badge/Mongoose-880000?logo=mongoose&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
 
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 </div>
 
 **English** · [Português](README.pt-BR.md)
@@ -80,6 +82,12 @@ src/
 ├── middlewares/      # Pagination, 404 and error handler
 └── errors/           # Error classes (base, 400, 404, validation)
 ```
+
+---
+
+## License
+
+[MIT](LICENSE)
 
 ---
 
